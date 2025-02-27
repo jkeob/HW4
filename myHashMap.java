@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Jacob Oh / 001 ***
  *
  * This hashMap object represents an over simplification of Java's implementation of HashMap within
  * Java's Collection Framework Library. You are to complete the following methods:
@@ -215,7 +215,7 @@ class myHashMap<K,V> {
      *
      * @param key - key value for the <key,value> pair to remove
      *
-     * @return value - return the node for the <key,value> 
+     * @return value - return the node for the <key,value>
      *                 removed, else null if not found
      */
 
@@ -230,6 +230,32 @@ class myHashMap<K,V> {
          * the return value discussion in this method's prologue to make sure the correct
          * return value is returned the invoking function based on the remove outcome.
          */
+
+
+
+
+        int index = getBucketIndex(key);
+
+        HashNode<K, V> head = bucket.get(index);
+        HashNode<K, V> previous = null;
+
+        while (head != null) {
+            if (head.key.equals(key)) {
+                V removedValue = head.value;
+
+                if (previous == null) {
+                    bucket.set(index, head.next);
+                } else {
+                    previous.next = head.next;
+                }
+
+                size--;
+                return removedValue;
+            }
+
+            previous = head;
+            head = head.next;
+        }
 
         return null;
     }
@@ -251,8 +277,8 @@ class myHashMap<K,V> {
 
         V originalValue = get(key);
 
-        if (originalValue == null || 
-           (! originalValue.equals(val)) ) {
+        if (originalValue == null ||
+                (! originalValue.equals(val)) ) {
             return false;
         }
 
@@ -321,8 +347,8 @@ class myHashMap<K,V> {
         }
 
         /*
-         * Check the load factor of the hashmap, if greater 
-         * than DEFAULT_LOAD_FACTOR, we will double the number 
+         * Check the load factor of the hashmap, if greater
+         * than DEFAULT_LOAD_FACTOR, we will double the number
          * of buckets of our hashmap.
          */
 
@@ -341,7 +367,7 @@ class myHashMap<K,V> {
              * Traverse the original buckets, and for each bucket
              * traverse the nodes stored there (via linked-list).
              * For each node (<key, value> pair), add to the new
-             * (grown) bucket list. The re-add process will 
+             * (grown) bucket list. The re-add process will
              * rehash the keys to the new bucket size.
              */
             for (HashNode<K, V> headNode : tmp) {
@@ -406,10 +432,31 @@ class myHashMap<K,V> {
          * replace (see method's prologue above).
          */
 
-        return val;
-    }
 
-    
+        int index = getBucketIndex(key);
+
+        HashNode<K, V> head = bucket.get(index);
+
+
+
+
+        while (head != null) {
+            if (head.key.equals(key)) {
+                V oldValue = head.value;
+                head.value = val;
+
+                return oldValue;
+            }
+
+
+
+
+            head = head.next;
+        }
+
+        return null;    }
+
+
     /**
      * method: boolean replace(K, V, V)
      *
@@ -434,6 +481,19 @@ class myHashMap<K,V> {
          * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
          */
 
+        int index = getBucketIndex(key);
+        HashNode<K, V> head = bucket.get(index);
+
+
+
+        while (head != null) {
+              if (head.key.equals(key) && head.value.equals(oldVal)) {
+                head.value = newVal;
+                return true;
+            }
+            head = head.next;
+        }
+
         return false;
     }
 
@@ -452,7 +512,7 @@ class myHashMap<K,V> {
     public boolean containsValue(V val) {
 
         for (HashNode<K, V> headNode : bucket) {
-            while (headNode != null) {
+                 while (headNode != null) {
                 if ( headNode.value.equals(val) )
                     return true;
                 headNode = headNode.next;
