@@ -1,5 +1,5 @@
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Jacob Oh / 001 ***
  *
  * This HashingProblems object contains three methods / problems that you must
  * complete utilize the HashMap object within the Java's Collection Framework Library.
@@ -40,9 +40,32 @@ class HashingProblems {
          * returning 0.0 is NOT correct, as that is not the average value. Whereas
          * returning 0.0/0.0 IS correct (which would return a non-number).
          */
+        double countForMatches = 0.0;
+        double sum = 0.0;
 
-         return 0.0 / 0.0;
-  }
+        for (int i = 0; i < map.size(); i++){
+
+
+
+            for (int j = 0; j < array.length ; j++) {
+                if (map.get(array[j]) != null){
+                    countForMatches++;
+                    sum+=map.get(array[j]);
+                }
+
+
+            }
+        }
+
+        if (countForMatches == 0){
+            return 0.0 / 0.0;
+
+        }else {
+            return sum / countForMatches;
+        }
+
+
+    }
 
 
     /*
@@ -52,65 +75,102 @@ class HashingProblems {
      * values of the corresponding keys that are odd.
      */
 
-  public ArrayList<String> odd(HashMap<Integer, String> map) {
-    
-      ArrayList<String> result = new ArrayList<>();
+    public ArrayList<String> odd(HashMap<Integer, String> map) {
 
-      /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
+        ArrayList<String> result = new ArrayList<>();
+
+        /*
+         * ADD YOUR CODE HERE
+         *
+         * Hint: Consider iterating over the HashMap using the keySet method.
+         */
+        for (Object key : map.keySet()) {
+            if ( (int)key %2 != 0){
+                result.add(map.get(key));
+            }
+        }
 
 
-      return result;
-  }
+
+        return result;
+    }
 
 
-  /*
-   * Method twoSums()
-   *
-   * You ARE to solve this problem in time complexity O(n). The submittals will be spot checked.
-   *
-   * Problem statement:
-   * Suppose you are given an integer array containing the values [1,4,5,7,8,9] along with the
-   * value k=4, where k is the difference between two array elements. How many times does k appear
-   * in that list?
-   *
-   * With the above numbers, it will be three times:
-   *    k = 4
-   *    (5 - 1) = k
-   *    (8 - 4) = k
-   *    (9 - 5) = k
-   *    k appears 3 times.
-   *
-   * All combinations must be considered. But, any other combination of the numbers in the array
-   * results in a difference value that is not equal to k (k=4 in this case).
-   *
-   * This can be solved using nested for-loops, checking all combinations of the values in the array.
-   * But the time complexity would be O(n^2).
-   *
-   * In order to solve this problem in O(n) complexity, utilize a HashMap (or a HashSet).
-   *
-   * You are two solve this using a HashMap (or you can use a HashSet, which is implemented
-   * using HashMap). To solve this, you should populate the HashMap (or HashSet) based on
-   * the array (this will be complexity time on the order of 'n'). After populating the HashMap,
-   * consider a for-loop that does a lookup (probe) of the HashMap (or HashSet) on each iteration
-   * of the loop. This will also have a complexity on the order of 'n', as the hashing probes are a
-   * constant time complexity (after removing any constant based on collisions).
-   *
-   * This will result in a time complexity of O(n) for the overall method.
-   *
-   * NOTE: Solving using a HashMap or HashSet is fine (either is okay). HashSet may be easier to code?
-   */
+    /*
+     * Method twoSums()
+     *
+     * You ARE to solve this problem in time complexity O(n). The submittals will be spot checked.
+     *
+     * Problem statement:
+     * Suppose you are given an integer array containing the values [1,4,5,7,8,9] along with the
+     * value k=4, where k is the difference between two array elements. How many times does k appear
+     * in that list?
+     *
+     * With the above numbers, it will be three times:
+     *    k = 4
+     *    (5 - 1) = k
+     *    (8 - 4) = k
+     *    (9 - 5) = k
+     *    k appears 3 times.
+     *
+     * All combinations must be considered. But, any other combination of the numbers in the array
+     * results in a difference value that is not equal to k (k=4 in this case).
+     *
+     * This can be solved using nested for-loops, checking all combinations of the values in the array.
+     * But the time complexity would be O(n^2).
+     *
+     * In order to solve this problem in O(n) complexity, utilize a HashMap (or a HashSet).
+     *
+     * You are two solve this using a HashMap (or you can use a HashSet, which is implemented
+     * using HashMap). To solve this, you should populate the HashMap (or HashSet) based on
+     * the array (this will be complexity time on the order of 'n'). After populating the HashMap,
+     * consider a for-loop that does a lookup (probe) of the HashMap (or HashSet) on each iteration
+     * of the loop. This will also have a complexity on the order of 'n', as the hashing probes are a
+     * constant time complexity (after removing any constant based on collisions).
+     *
+     * This will result in a time complexity of O(n) for the overall method.
+     *
+     * NOTE: Solving using a HashMap or HashSet is fine (either is okay). HashSet may be easier to code?
+     */
 
-  public int twoSums(int[] numbers, int k) {
+    public int twoSums(int[] numbers, int k) {
 
-      /*
-       * ADD YOUR CODE HERE
-       */
+        /*
+         * ADD YOUR CODE HERE
+         */
+        HashSet<Integer> toSolve = new HashSet<>();
+        int count = 0;
 
-      return -1;
-  }
+        for (int i = 0; i < numbers.length ; i++) {
+            toSolve.add(numbers[i]);
+        }
+
+        for (int i = 0; i < toSolve.size() ; i++) {
+
+            //check up only
+                if (toSolve.contains(numbers[i]+k)){
+                    count++;
+                }
+
+
+
+                if (toSolve.contains(numbers[i]-k)){
+                        count++;
+
+                }
+
+
+
+
+        }
+        count = count/2;
+        System.out.println(count);
+
+        if (count == 0){
+            return -1;
+        }
+
+        return count;
+    }
 
 } /* end class HashingProblems */
